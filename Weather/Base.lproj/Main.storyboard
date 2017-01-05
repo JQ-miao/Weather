@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uY5-zT-Pbs">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MainController-->
+        <scene sceneID="uGQ-OR-3LL">
+            <objects>
+                <tableViewController id="82L-eJ-L0T" userLabel="MainController" customClass="MainController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="m9P-z4-zGi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="82L-eJ-L0T" id="LrA-yZ-X3E"/>
+                            <outlet property="delegate" destination="82L-eJ-L0T" id="o1B-bS-00C"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="weather" id="MXY-yP-HsS"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kVH-AP-dRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="23"/>
+        </scene>
+        <!--Add Controller-->
+        <scene sceneID="F3l-rq-yC5">
+            <objects>
+                <viewController storyboardIdentifier="addController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WFH-1a-UfT" customClass="AddController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ajq-bh-FeO"/>
+                        <viewControllerLayoutGuide type="bottom" id="AxC-rW-kOs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W4R-ex-IZY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="search a city" translatesAutoresizingMaskIntoConstraints="NO" id="nsZ-76-vYl">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <outlet property="delegate" destination="WFH-1a-UfT" id="9Mp-Mg-3HG"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mre-k8-8ZZ">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="WFH-1a-UfT" id="G8I-wL-keT"/>
+                                    <outlet property="delegate" destination="WFH-1a-UfT" id="zmp-6w-fD7"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nsZ-76-vYl" firstAttribute="leading" secondItem="W4R-ex-IZY" secondAttribute="leading" id="BAd-9F-Lpa"/>
+                            <constraint firstItem="Mre-k8-8ZZ" firstAttribute="leading" secondItem="W4R-ex-IZY" secondAttribute="leading" id="Oxn-0N-gLv"/>
+                            <constraint firstItem="AxC-rW-kOs" firstAttribute="top" secondItem="Mre-k8-8ZZ" secondAttribute="bottom" id="cup-mq-szH"/>
+                            <constraint firstItem="Mre-k8-8ZZ" firstAttribute="top" secondItem="nsZ-76-vYl" secondAttribute="bottom" id="uaH-w4-bpM"/>
+                            <constraint firstAttribute="trailing" secondItem="nsZ-76-vYl" secondAttribute="trailing" id="uwn-ye-b5H"/>
+                            <constraint firstAttribute="trailing" secondItem="Mre-k8-8ZZ" secondAttribute="trailing" id="x18-Zv-GtG"/>
+                            <constraint firstItem="nsZ-76-vYl" firstAttribute="top" secondItem="ajq-bh-FeO" secondAttribute="bottom" id="yEO-Qv-UEP"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="searchBar" destination="nsZ-76-vYl" id="VUm-Ab-a7s"/>
+                        <outlet property="searchDisplayController" destination="SZc-Ac-Biw" id="o08-SP-RYT"/>
+                        <outlet property="tableView" destination="Mre-k8-8ZZ" id="bX8-pP-pZ9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BQZ-fL-wZt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="SZc-Ac-Biw">
+                    <connections>
+                        <outlet property="delegate" destination="WFH-1a-UfT" id="vf4-Nt-oYC"/>
+                        <outlet property="searchBar" destination="nsZ-76-vYl" id="SzO-f8-jeR"/>
+                        <outlet property="searchContentsController" destination="WFH-1a-UfT" id="syF-Ib-Wv4"/>
+                        <outlet property="searchResultsDataSource" destination="WFH-1a-UfT" id="88n-lI-if9"/>
+                        <outlet property="searchResultsDelegate" destination="WFH-1a-UfT" id="npf-sM-WwF"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="965.60000000000002" y="22.938530734632685"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="BMJ-hJ-OPQ">
+            <objects>
+                <navigationController id="uY5-zT-Pbs" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yZh-17-K6s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="82L-eJ-L0T" kind="relationship" relationship="rootViewController" id="LxT-mb-GyT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zNG-db-dJL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-518" y="23"/>
+        </scene>
+    </scenes>
+</document>
