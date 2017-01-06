@@ -2,7 +2,7 @@
 //  WENetwork.swift
 //  Weather
 //
-//  Created by vndjqmia on 2017/1/2.
+//  Created by himjq.com on 2017/1/4.
 //  Copyright © 2017年 himjq.com. All rights reserved.
 //
 
@@ -36,8 +36,6 @@ public class Network{
             if (error != nil) {
                 print(error!.localizedDescription)
             }
-//            var responseDic = NSDictionary()
-//            responseDic = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
             callback(data as AnyObject?, error as? NSError)
         }
         dataTask.resume()

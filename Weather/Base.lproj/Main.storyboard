@@ -86,7 +86,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="965.60000000000002" y="22.938530734632685"/>
+            <point key="canvasLocation" x="1102" y="23"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BMJ-hJ-OPQ">

@@ -2,7 +2,7 @@
 //  TodayViewController.swift
 //  Today Extension
 //
-//  Created by vndjqmia on 2016/12/30.
+//  Created by himjq.com on 2017/1/4.
 //  Copyright © 2016年 himjq.com. All rights reserved.
 //
 

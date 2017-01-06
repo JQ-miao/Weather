@@ -2,7 +2,7 @@
 //  Constants.swift
 //  Weather
 //
-//  Created by vndjqmia on 2016/12/30.
+//  Created by himjq.com on 2017/1/4.
 //  Copyright © 2016年 himjq.com. All rights reserved.
 //
 
@@ -13,7 +13,6 @@ let w_api_key = "mcaqnrgdf1h97wcq"
 let w_daily = "/daily.json"
 let w_now = "/now.json"
 //let w_hourly = "/hourly.json"
-
 
 //NSNotifications
 let W_CITY = "W_CITY"
