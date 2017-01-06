@@ -68,7 +68,7 @@ class MainController: UITableViewController {
         let w = dataSource[indexPath.row] as!Weather
         cell.w_city.text = w.name
         cell.w_wind.text = w.wind_scale
-        cell.w_temperature.text = w.temperature + "°"
+        cell.w_temperature.text = w.temperature
         cell.w_description.text = w.text_day
         cell.w_temperature_range.text = w.high + "°/" + w.low + "°"
         cell.w_image.image = UIImage(named:w.code + ".png")
