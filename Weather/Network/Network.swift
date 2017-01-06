@@ -8,17 +8,20 @@
 
 import Foundation
 
-public class WeatherNetwork{
+
+public class Network{
     
-    class func GET(url:String,parsDic:NSDictionary){
+    typealias Callback = (AnyObject?,NSError?) -> Void
+    
+    //GET
+    class func GET(url:String,pars:Dictionary < String , String >,callback:@escaping Callback){
         
         var urlStr:String!
-        var responseDic = NSDictionary()
-        
-        if parsDic.count > 0 {
+
+        if (pars.count) > 0 {
             let list  = NSMutableArray()
-            for subDic in parsDic {
-                list.add("\(subDic.0)=\(subDic.1)")
+            for dic in pars {
+                list.add("\(dic.0)=\(dic.1)")
             }
             urlStr = url + "?" + list.componentsJoined(by: "&")
         }
@@ -29,14 +32,16 @@ public class WeatherNetwork{
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            responseDic = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
-            print(responseDic)
+            
+            if (error != nil) {
+                print(error!.localizedDescription)
+            }
+//            var responseDic = NSDictionary()
+//            responseDic = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+            callback(data as AnyObject?, error as? NSError)
         }
         dataTask.resume()
     }
     
-//    class func POST(url:String,parsDic:NSDictionary){
-//
-//    }
-    
+    //POST
 }

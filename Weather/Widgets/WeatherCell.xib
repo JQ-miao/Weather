@@ -24,7 +24,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="30" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-c9-o3A">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="30" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-c9-o3A">
                         <rect key="frame" x="8" y="10" width="80" height="80"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="0hT-l6-JGT"/>
@@ -111,7 +111,7 @@
                 <outlet property="w_temperature_range" destination="uPg-LG-tJ3" id="Rdj-DN-npd"/>
                 <outlet property="w_wind" destination="zHx-cR-RtM" id="5Cl-Jc-UXW"/>
             </connections>
-            <point key="canvasLocation" x="52" y="-147"/>
+            <point key="canvasLocation" x="55" y="-26"/>
         </tableViewCell>
     </objects>
     <resources>

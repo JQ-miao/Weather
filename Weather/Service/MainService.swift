@@ -8,6 +8,7 @@
 
 import UIKit
 
-class MainService: NSObject {
+public class MainService: NSObject {
+
 
 }
