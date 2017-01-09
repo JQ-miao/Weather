@@ -39,13 +39,7 @@ public class Network{
             if (!json["results"].isEmpty){
                 completition(JSON(data:data!), response,error)
             }else{
-//                Utils.alert(msg: json["status"].stringValue)
-//                let alertController = UIAlertController(title: "天气",
-//                                                        message: msg, preferredStyle: .alert)
-//                let cancelAction = UIAlertAction(title: "知道了", style: .cancel, handler: nil)
-//                alertController.addAction(cancelAction)
-//                
-//                UIApplication.shared.windows[0].rootViewController?.present(alertController, animated: true, completion: nil)
+                print(json["status"].stringValue)
             }
         }
         dataTask.resume()
