@@ -7,14 +7,13 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 
 public class Network{
     
-    typealias Callback = (AnyObject?,NSError?) -> Void
-    
     //GET
-    class func GET(url:String,pars:Dictionary < String , String >,callback:@escaping Callback){
+    class func GET(url:String,pars:Dictionary < String , String >,completition:@escaping (JSON?,URLResponse?,Error?) -> Void){
         
         var urlStr:String!
 
@@ -36,7 +35,18 @@ public class Network{
             if (error != nil) {
                 print(error!.localizedDescription)
             }
-            callback(data as AnyObject?, error as? NSError)
+            var json = JSON(data:data!)
+            if (!json["results"].isEmpty){
+                completition(JSON(data:data!), response,error)
+            }else{
+//                Utils.alert(msg: json["status"].stringValue)
+//                let alertController = UIAlertController(title: "天气",
+//                                                        message: msg, preferredStyle: .alert)
+//                let cancelAction = UIAlertAction(title: "知道了", style: .cancel, handler: nil)
+//                alertController.addAction(cancelAction)
+//                
+//                UIApplication.shared.windows[0].rootViewController?.present(alertController, animated: true, completion: nil)
+            }
         }
         dataTask.resume()
     }

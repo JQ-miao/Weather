@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import UIKit
 
 
-public class Utils: NSObject {
+public class Utils{
     //汉字转拼音
     class func transformHanziToPinyin(hanzi:String,deleteSpace:Bool) ->String{
         let str = (hanzi as NSString).mutableCopy() as! CFMutableString
@@ -29,6 +30,14 @@ public class Utils: NSObject {
     //监听广播
     class func observe(name:String,observer:AnyObject,selector:Selector){
         NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name(rawValue: name), object: nil)
+    }
+    
+    class func isNight() ->Bool{
+        let d = Date()
+        let f = DateFormatter()
+        f.dateFormat = "HH"
+        let hour = Int(f.string(from: d))!
+        return (hour > 6 && hour < 18) ? false : true
     }
     
 }

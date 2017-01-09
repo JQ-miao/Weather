@@ -11,74 +11,86 @@ import SwiftyJSON
 
 class MainController: UITableViewController {
     
-    var dataSource = NSMutableArray()
+    var dataSource:[Weather] = []
+    var focusedCitys:Array<String> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(MainController.addClick))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(MainController.addNewCity))
         
+        //注册cell
         self.tableView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellReuseIdentifier: "w_cell")
-        
+        //监听选择城市
         Utils.observe(name: W_CITY, observer: self, selector: #selector(receiveCityName(notifaction:)))
         
-        for _ in 1...5 {
-            let w = Weather()
-            dataSource.add(w)
+        self.loadFocusedCitys()
+    }
+    
+    func loadFocusedCitys(){
+        if (UserDefaults.standard.object(forKey: "Focused") != nil) {
+            focusedCitys = UserDefaults.standard.object(forKey: "Focused") as!Array
+            for c in focusedCitys {
+                Weather.fetch(city: c , completition: { (w) in
+                    self.dataSource.append(w)
+                    self.tableView.reloadData()
+                })
+            }
+            
         }
     }
     
     func receiveCityName(notifaction: NSNotification) {
-        var cityName = (notifaction.userInfo as? [String : AnyObject])?["msg"]
-        cityName = Utils.transformHanziToPinyin(hanzi: cityName as! String, deleteSpace: true) as AnyObject?
-        Network.GET(url:w_server + w_daily , pars: ["key":w_api_key,"location":cityName as Any as! String],callback: {data,error in
-            if (data != nil) {
-                _ = Parse.daily(json: JSON(data: data as! Data))
-            }
-        })
+        let city = (notifaction.userInfo as? [String : AnyObject])?["msg"] as! String
+        let cityName = Utils.transformHanziToPinyin(hanzi: city, deleteSpace: true)
+        Weather.fetch(city: cityName) { (w) in
+            
+            self.dataSource.append(w)
+            self.tableView.reloadData()
+            
+            self.focusedCitys.append(cityName)
+            UserDefaults.standard.set(self.focusedCitys, forKey: "Focused")
+            
+            //            self.tableView.beginUpdates()
+            //            var ip = IndexPath()
+            //            ip.section = self.dataSource.count == 1 ? 0:1
+            //            ip.row = self.dataSource.count - 1
+            //            ip.section = 0
+            //            ip.row = 0
+            //            self.tableView.insertRows(at: [ip], with: .left)
+            //            self.tableView.endUpdates()
+        }
     }
     
-    func addClick() {
+    func addNewCity() {
         let vc = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "addController") as! AddController
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 2
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "最关注" : "已关注"
-    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return section == 0 ?  1 : dataSource.count - 1
+        return dataSource.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "w_cell", for: indexPath) as! WeatherCell
-        let w = dataSource[indexPath.row] as!Weather
+        let w = dataSource[indexPath.row]
         cell.w_city.text = w.name
-        cell.w_wind.text = w.wind_scale
-        cell.w_temperature.text = w.temperature
-        cell.w_description.text = w.text_day
-        cell.w_temperature_range.text = w.high + "°/" + w.low + "°"
-        cell.w_image.image = UIImage(named:w.code + ".png")
+        cell.w_wind.text = w.dailys[0].wind
+        cell.w_temperature.text = w.now.temperature
+        cell.w_description.text = w.now.desc
+        cell.w_temperature_range.text = w.dailys[0].temperatureRange
+        cell.w_image.image = UIImage(named:w.now.imageCode)
         return cell
     }
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return indexPath.row == 0&&indexPath.section==0 ?  false : true
+        return true
     }
     
     // Override to support editing the table view.
@@ -86,10 +98,12 @@ class MainController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             dataSource.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            tableView.insertRows(at: [indexPath], with: .bottom)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.tableView.reloadData()
+            
+            self.focusedCitys = UserDefaults.standard.object(forKey: "Focused") as!Array
+            self.focusedCitys.remove(at: indexPath.row)
+            UserDefaults.standard.set(self.focusedCitys, forKey: "Focused")
         }
     }
     
@@ -97,25 +111,29 @@ class MainController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        //        if destinationIndexPath.row == 0 && destinationIndexPath.section == 0{
-        //            var indexpath = destinationIndexPath
-        //         tableView.deleteRows(at: [destinationIndexPath], with: .fade)
-        //        }
-        //        dataSource.exchangeObject(at: destinationIndexPath.row, withObjectAt: sourceIndexPath.row)
-    }
+    //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    //        //        if destinationIndexPath.row == 0 && destinationIndexPath.section == 0{
+    //        //            var indexpath = destinationIndexPath
+    //        //         tableView.deleteRows(at: [destinationIndexPath], with: .fade)
+    //        //        }
+    //        //        dataSource.exchangeObject(at: destinationIndexPath.row, withObjectAt: sourceIndexPath.row)
+    //    }
     
-    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        var indexPath = IndexPath()
-        indexPath.section = proposedDestinationIndexPath.section
-        indexPath.row = proposedDestinationIndexPath.row - 1
-        return indexPath
-    }
+    //    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+    //        var indexPath = IndexPath()
+    //        indexPath.section = proposedDestinationIndexPath.section
+    //        indexPath.row = proposedDestinationIndexPath.row - 1
+    //        return indexPath
+    //    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 114.0
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     /*
      // MARK: - Navigation

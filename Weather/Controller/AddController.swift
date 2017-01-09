@@ -21,8 +21,23 @@ UITableViewDataSource,UITableViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        dataSource = NSArray(array: AddService.getCityData()) as! [String]
+        dataSource = NSArray(array:getCityData()) as! [String]
         result = dataSource
+    }
+    
+    func getCityData() -> NSMutableArray{
+        var plistArr: NSArray = NSArray()
+        let resultArr:NSMutableArray = NSMutableArray()
+        let filePath = Bundle.main.path(forResource: "ProvincesAndCities", ofType:"plist" )
+        plistArr = NSArray(contentsOfFile: filePath!)!
+        
+        
+        for dic in plistArr {
+            for dic1 in (dic as! NSDictionary)["Cities"] as!NSArray{
+                resultArr.add((dic1 as! NSDictionary)["city"] ?? "")
+            }
+        }
+        return resultArr
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
