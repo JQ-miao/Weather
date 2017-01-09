@@ -46,7 +46,6 @@ public class Utils{
 //                                                message: msg, preferredStyle: .alert)
 //        let cancelAction = UIAlertAction(title: "知道了", style: .cancel, handler: nil)
 //        alertController.addAction(cancelAction)
-//
 //        UIApplication.shared.windows[0].rootViewController?.present(alertController, animated: true, completion: nil)
 //    }
     

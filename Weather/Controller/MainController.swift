@@ -25,6 +25,7 @@ class MainController: UITableViewController {
         //监听选择城市
         Utils.observe(name: W_CITY, observer: self, selector: #selector(receiveCityName(notifaction:)))
         
+        //加载已关注
         self.loadFocusedCitys()
     }
     
@@ -37,7 +38,6 @@ class MainController: UITableViewController {
                     self.tableView.reloadData()
                 })
             }
-            
         }
     }
     
@@ -48,18 +48,8 @@ class MainController: UITableViewController {
             
             self.dataSource.append(w)
             self.tableView.reloadData()
-            
             self.focusedCitys.append(cityName)
             UserDefaults.standard.set(self.focusedCitys, forKey: "Focused")
-            
-            //            self.tableView.beginUpdates()
-            //            var ip = IndexPath()
-            //            ip.section = self.dataSource.count == 1 ? 0:1
-            //            ip.row = self.dataSource.count - 1
-            //            ip.section = 0
-            //            ip.row = 0
-            //            self.tableView.insertRows(at: [ip], with: .left)
-            //            self.tableView.endUpdates()
         }
     }
     
@@ -111,23 +101,8 @@ class MainController: UITableViewController {
         return true
     }
     
-    //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-    //        //        if destinationIndexPath.row == 0 && destinationIndexPath.section == 0{
-    //        //            var indexpath = destinationIndexPath
-    //        //         tableView.deleteRows(at: [destinationIndexPath], with: .fade)
-    //        //        }
-    //        //        dataSource.exchangeObject(at: destinationIndexPath.row, withObjectAt: sourceIndexPath.row)
-    //    }
-    
-    //    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-    //        var indexPath = IndexPath()
-    //        indexPath.section = proposedDestinationIndexPath.section
-    //        indexPath.row = proposedDestinationIndexPath.row - 1
-    //        return indexPath
-    //    }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 114.0
+        return 100.0
     }
     
     override func didReceiveMemoryWarning() {

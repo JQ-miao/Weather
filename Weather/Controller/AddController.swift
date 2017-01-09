@@ -11,6 +11,7 @@ import UIKit
 
 class AddController: UIViewController,UISearchBarDelegate,
 UITableViewDataSource,UITableViewDelegate {
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,7 +21,6 @@ UITableViewDataSource,UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         dataSource = NSArray(array:getCityData()) as! [String]
         result = dataSource
     }
@@ -31,10 +31,9 @@ UITableViewDataSource,UITableViewDelegate {
         let filePath = Bundle.main.path(forResource: "ProvincesAndCities", ofType:"plist" )
         plistArr = NSArray(contentsOfFile: filePath!)!
         
-        
         for dic in plistArr {
             for dic1 in (dic as! NSDictionary)["Cities"] as!NSArray{
-                resultArr.add((dic1 as! NSDictionary)["city"] ?? "")
+                resultArr.add((dic1 as! NSDictionary)["city"]!)
             }
         }
         return resultArr
@@ -48,7 +47,6 @@ UITableViewDataSource,UITableViewDelegate {
         
         Utils.broadcast(name: W_CITY, msg: self.result[indexPath.row] as AnyObject)
         self.navigationController!.popViewController(animated: true)
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
@@ -84,16 +82,4 @@ UITableViewDataSource,UITableViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

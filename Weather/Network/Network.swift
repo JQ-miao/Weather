@@ -32,14 +32,11 @@ public class Network{
         let session = URLSession(configuration: config)
         let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            let json = JSON(data:data!)
             if (error != nil) {
-                print(error!.localizedDescription)
-            }
-            var json = JSON(data:data!)
-            if (!json["results"].isEmpty){
-                completition(JSON(data:data!), response,error)
+                print("GET:\(urlStr) error:\(error!.localizedDescription)")
             }else{
-                print(json["status"].stringValue)
+                completition(json, response,error)
             }
         }
         dataTask.resume()
