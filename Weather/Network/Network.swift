@@ -16,7 +16,6 @@ public class Network{
     class func GET(url:String,pars:Dictionary < String , String >,completition:@escaping (JSON?,URLResponse?,Error?) -> Void){
         
         var urlStr:String!
-
         if (pars.count) > 0 {
             let list  = NSMutableArray()
             for dic in pars {
@@ -24,7 +23,6 @@ public class Network{
             }
             urlStr = url + "?" + list.componentsJoined(by: "&")
         }
-        
         let request:NSMutableURLRequest = NSMutableURLRequest(url:NSURL(string:urlStr) as! URL)
         request.httpMethod = "GET"
         request.timeoutInterval = 20.0

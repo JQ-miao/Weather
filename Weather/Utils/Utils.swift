@@ -31,7 +31,7 @@ public class Utils{
     class func observe(name:String,observer:AnyObject,selector:Selector){
         NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name(rawValue: name), object: nil)
     }
-    
+    //鉴别晚上
     class func isNight() ->Bool{
         let d = Date()
         let f = DateFormatter()

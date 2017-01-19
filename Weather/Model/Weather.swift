@@ -21,11 +21,12 @@ public class Weather:NSObject{
             if (nowJson?["results",0].isEmpty)!{
                 print(nowJson?["status"].stringValue ?? "")
             }else{
-                let name = (nowJson?["results",0,"location","name"].stringValue)!
+                let name        = (nowJson?["results",0,"location","name"].stringValue)!
                 let temperature = (nowJson?["results",0,"now","temperature"].stringValue)! + "°"
-                let desc = (nowJson?["results",0,"now","text"].stringValue)!
-                let imageCode = (nowJson?["results",0,"now","code"].stringValue)! + ".png"
-                let lastUpdate = (nowJson?["results",0,"last_update"].stringValue)!
+                let desc        = (nowJson?["results",0,"now","text"].stringValue)!
+                let imageCode   = (nowJson?["results",0,"now","code"].stringValue)! + ".png"
+                let lastUpdate  = (nowJson?["results",0,"last_update"].stringValue)!
+                
                 let now = NowInfor.init(temperature: temperature, desc: desc, imageCode: imageCode, lastUpdate: lastUpdate)
                 
                 Network.GET(url:w_server + w_daily , pars: ["key":w_api_key,"location":city]) { (dailyJson, response, error) in

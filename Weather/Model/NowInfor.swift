@@ -18,8 +18,8 @@ class NowInfor {
     //init
     init(temperature: String, desc: String, imageCode: String,lastUpdate:String) {
         self.temperature = temperature
-        self.desc = desc
-        self.imageCode = imageCode
-        self.lastUpdate = lastUpdate
+        self.desc        = desc
+        self.imageCode   = imageCode
+        self.lastUpdate  = lastUpdate
     }
 }

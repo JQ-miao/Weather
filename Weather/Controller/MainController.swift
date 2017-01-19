@@ -32,7 +32,8 @@ class MainController: UITableViewController {
     func loadFocusedCitys(){
         if (UserDefaults.standard.object(forKey: "Focused") != nil) {
             focusedCitys = UserDefaults.standard.object(forKey: "Focused") as!Array
-            for c in focusedCitys {
+            
+            for (_,c) in focusedCitys.enumerated() {
                 Weather.fetch(city: c , completition: { (w) in
                     self.dataSource.append(w)
                     self.tableView.reloadData()
@@ -51,6 +52,8 @@ class MainController: UITableViewController {
             self.focusedCitys.append(cityName)
             UserDefaults.standard.set(self.focusedCitys, forKey: "Focused")
         }
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     func addNewCity() {

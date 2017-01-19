@@ -17,9 +17,9 @@ class DailyInfor {
     
     //init
     init(imageCode: String, desc: String, temperatureRange: String,wind:String) {
-        self.imageCode = imageCode
-        self.desc = desc
+        self.imageCode        = imageCode
+        self.desc             = desc
         self.temperatureRange = temperatureRange
-        self.wind = wind
+        self.wind             = wind
     }
 }
