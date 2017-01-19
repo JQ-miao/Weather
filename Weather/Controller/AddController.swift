@@ -45,8 +45,9 @@ UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        Utils.broadcast(name: W_CITY, msg: self.result[indexPath.row] as AnyObject)
-        self.navigationController!.popViewController(animated: true)
+//        Utils.broadcast(name: W_CITY, msg: self.result[indexPath.row] as AnyObject)
+//        self.navigationController!.popViewController(animated: true)
+        UIApplication.shared.open(NSURL.init(string: "slack://") as! URL, options: [:], completionHandler: nil)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
