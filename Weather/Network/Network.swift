@@ -12,7 +12,7 @@ import SwiftyJSON
 
 public class Network{
     
-    //GET
+    //Http Get
     class func GET(url:String,pars:Dictionary < String , String >,completition:@escaping (JSON?,URLResponse?,Error?) -> Void){
         
         var urlStr:String!
@@ -41,4 +41,7 @@ public class Network{
     }
     
     //POST
+    class func POST(url:String,pars:Dictionary< String , String >,completition:@escaping (JSON?,URLResponse?,Error?) -> Void) {
+        
+    }
 }
